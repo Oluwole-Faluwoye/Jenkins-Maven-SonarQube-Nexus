@@ -22,6 +22,7 @@ yum install -y apache-maven
 
 ## Configure MAVEN_HOME and PATH Environment Variables
 rm .bash_profile
+# Press Y
 wget https://raw.githubusercontent.com/awanmbandi/realworld-cicd-pipeline-project/jenkins-master-client-config/.bash_profile
 source .bash_profile
 mvn -v
