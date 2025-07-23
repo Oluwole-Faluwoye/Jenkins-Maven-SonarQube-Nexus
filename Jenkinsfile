@@ -4,7 +4,7 @@ def COLOR_MAP = [
     'UNSTABLE': 'danger'
 ]
 pipeline {
-  agent any
+  agent any // This specifies that the pipeline can run on any available agent
   stages {
     stage('Validate Project') {
         steps {
@@ -35,8 +35,8 @@ pipeline {
         steps {
             sh  """mvn sonar:sonar \
                    -Dsonar.projectKey=Java-WebApp-Project \
-                   -Dsonar.host.url=http://172.31.22.149:9000 \
-                   -Dsonar.login=8378eafe212910dac7f2ecf9fb9184850da28195"""
+                   -Dsonar.host.url=http://172.31.17.14:9000 \
+                   -Dsonar.login=1c1957f28f10606cf37a76b41af753f5161faa69"""
         }
     } 
     stage("Upload Artifact To Nexus"){
@@ -53,7 +53,7 @@ pipeline {
   post {
     always {
         echo 'Slack Notifications.'
-        slackSend channel: '#jenkins-ci-pipeline-alerts-bf', //update and provide your channel name
+        slackSend channel: '#devops', //update and provide your channel name
         color: COLOR_MAP[currentBuild.currentResult],
         message: "*${currentBuild.currentResult}:* Job Name '${env.JOB_NAME}' build ${env.BUILD_NUMBER} \n Build Timestamp: ${env.BUILD_TIMESTAMP} \n Project Workspace: ${env.WORKSPACE} \n More info at: ${env.BUILD_URL}"
     }
